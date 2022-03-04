@@ -1,7 +1,6 @@
 byte receivedByte = 0;
 int N= 78;
 int R= 82;
-int E= 69;
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
