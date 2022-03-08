@@ -1,1 +1,39 @@
+#define anInput     A0
+#define co2Zero    55.0
 
+
+void setup() {
+  pinMode(anInput, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int co2now[10];
+  int co2raw = 0;
+  int co2comp = 0;
+  int co2ppm = 0;
+  int co2avg = 0;
+
+  for (int x= 0;x<10.0;x++){
+    co2now[x]=analogRead(A0);
+    delay(200);
+  }
+
+  for (int x = 0;x<10.0;x++){
+    co2avg=co2avg + co2now[x];
+  }
+
+  co2raw = co2avg/10.0;
+  co2comp = co2raw - co2Zero;
+  co2ppm = map(co2comp,0.0,1023.0,400.0,5000.0);
+  Serial.print(co2ppm);
+  Serial.println(" PPM");
+  if(co2ppm>999.9)
+  {
+   Serial.println(" CO2 Level is above threshold!");
+  }
+  else
+  {
+    Serial.println(" CO2 Level is within acceptable range");
+  }
+}
