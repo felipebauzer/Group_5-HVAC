@@ -1,0 +1,59 @@
+// variables created for pins in the x direction (left/right) and y direction (up/down), and the switch
+int xpin = 2;
+int ypin = 4;
+int switchpin = 5;
+
+// variables created to store the states of the joystick and switch
+int xvalue = 0;
+int yvalue = 0;
+int switchstate = 0;
+
+// variable control of joystick
+/*int xfactorlow = 0;
+ int xfactorhigh = 0;
+ int yfactorlow = 0;
+ int yfactorhigh = 0;*/
+
+void setup() {
+// Start the serial monitor
+Serial.begin(9600);
+
+// setup the switch pin as an input and set it to be HIGH when it is not pressed, LOW when it is pressed
+pinMode(switchpin, INPUT_PULLUP);
+
+}
+
+void loop() {
+// read the joystick position and store it to x,y and switch variables
+xvalue = analogRead(xpin);
+yvalue = analogRead(ypin);
+switchstate = digitalRead(switchpin);
+
+// prin tthe value of x, y, and switch to the serial monitor for setupf and troubleshooting
+/*Serial.print (xvalue);
+Serial.print (" ");
+Serial.print (yvalue);
+Serial.print (" ");
+Serial.print (switchstate);
+Serial.println ( );
+delay(1000);*/
+
+// print the simple direction indicated by the joystick
+if(xvalue < 1023){
+  Serial.println ("Move left");}
+
+if(xvalue > 1023){
+  Serial.println ("Move right");}
+
+if(yvalue > 1023){
+  Serial.println ("Move down");}
+  
+if(yvalue < 1023){
+  Serial.println ("Move up");}
+
+if(switchstate == 0){
+  Serial.println ("switch pressed");}
+  
+delay(500);
+
+}
