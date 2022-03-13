@@ -1,0 +1,34 @@
+byte receivedByte = 0;
+
+void setup()
+{
+  // initialize digital pin D4 as an output.
+  pinMode(D1, OUTPUT);
+  Serial.begin(230400);
+  delay(1000);
+  digitalWrite (D1, HIGH); // initial condition as the LED off
+  Serial.println ("Please Press E to switch on the LED and press S to switch off.");
+}
+
+// the loop function runs over and over again forever
+void loop()
+{
+  if (Serial.available()>0)
+  {
+    receivedByte = Serial.read();
+    if (receivedByte==69) // Switch On for E character
+    {
+       digitalWrite(D1, LOW);   // turn the LED on by making the voltage LOW
+       Serial.println ("The LED is ON.");
+       delay(3000);
+    }
+    if (receivedByte==83) // Switch Off for S character
+    {
+      digitalWrite(D1, HIGH);    // turn the LED off by making the voltage HIGH
+      Serial.println ("The LED is OFF.");
+      delay(3000);
+    }
+    
+  }
+
+}
