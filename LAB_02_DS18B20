@@ -1,0 +1,46 @@
+#include<OneWire.h>
+//OneWire allows us to communicate with 1-wire devices, that by definition requires only one data line (and ground) for communication such as the DS18B20 temperature sensor we’re using.
+
+#include<DallasTemperature.h>
+//Dallas Temperature Control Library, provides convenient calls to control the sensor and is intended to use with the exact DS18B20 sensor.
+
+#define ONE_WIRE_BUS D1
+// Data wire is plugged into D1 on ESP8266
+
+OneWire oneWire(ONE_WIRE_BUS);
+// A OneWire instance is created to communicate with the sensor.
+
+DallasTemperature sensors(&oneWire); 
+//We connect the OneWire bus with the temparature sensor. Pass our oneWire reference to Dallas Temperature.
+
+void setup(void) 
+{
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  Serial.println("Starting to measure temparature....");
+  sensors.begin();
+}
+
+void loop(void) 
+{
+  // put your main code here, to run repeatedly:
+  delay(3000);
+  Serial.print("Requesting temparature....");
+  sensors.requestTemperatures(); //Send the command to get the temperature
+  Serial.println("DONE");
+  Serial.print("Temperature is:  ");
+  Serial.println(sensors.getTempCByIndex(0)); // returns temperature in Celsius scale due to CB (for Fahrenheit it's FB)
+  if (sensors.getTempCByIndex(0)>25) // requested temperature range is between 18 and 25 degree Celsius. Corresponding response is given as below.
+  {
+    Serial.println("Temparature is too high, it is above 25 degree Celsius.");
+  }
+  if (sensors.getTempCByIndex(0)<18)
+  {
+    Serial.println("Temparature is too low, it is below 18 degree Celsius.");
+  }
+   else
+  {
+    Serial.println("Temparature is moderate.");
+  }
+    
+}
