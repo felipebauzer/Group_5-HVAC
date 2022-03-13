@@ -1,0 +1,42 @@
+ // Exercise - Passive Buzzer - Lab 02
+  
+  #include "pitches.h"
+  // notes in the melody
+  int melody[] = {
+    NOTE_C5, NOTE_D5,NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
+  int duration = 500; // 500 miliseconds
+  int buzzer= D1;
+  
+  void setup () {
+  Serial.begin(9600);
+  }
+  void loop() {
+    for (int thisNote =0; thisNote < 8; thisNote++) {
+      // pin D1 controls the sound, emitting each note every 'duration')
+      tone (buzzer, melody[thisNote], duration);
+      if (melody[thisNote] == 587){
+        Serial.println ("C5");        
+      }
+      if (melody[thisNote] == 659){
+        Serial.println ("D5");        
+      }
+      if (melody[thisNote] == 698){
+        Serial.println ("E5");        
+      }
+      if (melody[thisNote] == 784){
+        Serial.println ("F5");        
+      }
+      if (melody[thisNote] == 880){
+        Serial.println ("A5");        
+      }
+      if (melody[thisNote] == 988){
+        Serial.println ("B5");        
+      }
+      if (melody[thisNote] == 1047){
+        Serial.println ("C6");        
+      }
+      delay (1000);
+                   
+      }
+      noTone(buzzer);
+  }
