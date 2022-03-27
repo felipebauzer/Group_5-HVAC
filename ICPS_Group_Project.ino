@@ -319,9 +319,9 @@ void loop()
    Serial.println(" Level is above threshold!");
    tone(Buzzer, 5000); // Send 1KHz sound signal...
     delay(500);
-    Serial.println("\n");
-    Serial.println("\n");
-    Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
+    //Serial.println("\n");
+    //Serial.println("\n");
+    //Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
   }
   else
   {
@@ -339,9 +339,9 @@ void loop()
    Serial.println(" Level is above threshold!");
    tone(Buzzer, 5000); // Send 1KHz sound signal...
    delay(500);
-    Serial.println("\n");
-    Serial.println("\n");
-    Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
+   // Serial.println("\n");
+   // Serial.println("\n");
+   // Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
   }
   else
   {
@@ -356,28 +356,28 @@ void loop()
   Serial.print("\n");  
 }
 
-  String temp = String(t,2); // 'f' is converted to String with 2 decimals
-    temp.toCharArray(val, 16); // temp is converted to a char array
+  String temp = String(t,2); 
+    temp.toCharArray(val, 16); 
     Serial.println(val);
     DweetClient.add(key,val);
     DweetClient.sendAll(THIG_NAME);
     
    
-   String humd = String(h,2); // 'f' is converted to String with 2 decimals
-    humd.toCharArray(val, 16); // temp is converted to a char array
+   String humd = String(h,2); 
+    humd.toCharArray(val, 16); 
     Serial.println(val);
     DweetClient.add(key1,val);
     DweetClient.sendAll(THIG_NAME);
     
 
-    itoa(co2ppm, val, 10); // to convert an integer value into a char array
+    itoa(co2ppm, val, 10); 
     Serial.println(val);
     DweetClient.add(key2, val);
     DweetClient.sendAll(THIG_NAME);
    
 
-    String c = String(MQGetGasPercentage(MQRead(anInput)/Ro,co),2); // 'f' is converted to String with 2 decimals
-    c.toCharArray(val, 16); // temp is converted to a char array
+    String c = String(MQGetGasPercentage(MQRead(anInput)/Ro,co),2); 
+    c.toCharArray(val, 16); 
     Serial.println(val);
     DweetClient.add(key3,val);
     DweetClient.sendAll(THIG_NAME);
