@@ -26,6 +26,7 @@ float  Ro         = 10;
 
 
 DHT dht(dht_dpin, DHTTYPE);
+
 int melody[]={
   NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5};
   int duration = 500;
@@ -33,18 +34,17 @@ int melody[]={
 
 //Setting up Internet
 #include "dweetESP8266.h"
-#define THIG_NAME "SEAS40-group5-HVAC" // Put here your thing name
-
-
-const char* ssid = "sercommBA9719";
-const char* password = "DFDMXMKGDU3QKD53";
+#define THING_NAME "SEAS40-group5-HVAC" 
+const char* ssid = "dfa4fe";
+const char* password = "271435942";
 dweet DweetClient;
 
-char *key= "Temperature"; // this is the name of the parameter sent to dweet.io
+char *key = "Temperature"; // this is the name of the parameter sent to dweet.io
 char *key1= "Humidity"; // this is the name of the parameter sent to dweet.io
 char *key2= "CO2"; // this is the name of the parameter sent to dweet.io
 char *key3= "CO"; // this is the name of the parameter sent to dweet.io
-
+char *key4= "Occupancy"; // this is the name of the parameter sent to dweet.io
+char *key5= "Alarm"; // this is the name of the parameter sent to dweet.io
 
 void setup() {
   dht.begin();
@@ -91,7 +91,7 @@ void setup() {
 }
 
 
-char val[16]; // it stores a number composed by up to 16 characters
+char val[16]; 
 float MQResistanceCalculation(int raw_adc)
 {
   return ( ((float)Rl_Value*(1023-raw_adc)/raw_adc));
@@ -209,13 +209,13 @@ void loop()
 
     else
     {
-    noTone(Buzzer);     // Stop sound...
+    noTone(Buzzer);     
     }
     
  if(t<18)
     {
     Serial.println("Temperature is below 18C !");
-    tone(Buzzer, 3000); // Send 1KHz sound signal...
+    tone(Buzzer, 3000); 
     delay(500);
     //Serial.println("\n");
     //Serial.println("\n");
@@ -225,7 +225,7 @@ void loop()
      else if (t>25)
     {
     Serial.println("Temperature is above 25C !");
-    tone(Buzzer, 3000); // Send 1KHz sound signal...
+    tone(Buzzer, 3000); 
     delay(500);
     //Serial.println("\n");
     //Serial.println("\n");
@@ -235,7 +235,7 @@ void loop()
     }
       else
     {
-    noTone(Buzzer);     // Stop sound...
+    noTone(Buzzer);   
     }
   delay(20000);
   Serial.println("Unoccupied");
@@ -283,13 +283,13 @@ void loop()
 
     else
     {
-    noTone(Buzzer);     // Stop sound...
+    noTone(Buzzer);   
     }
     
  if(t<18)
    {
     Serial.println("Temperature is below 18C !");
-    tone(Buzzer, 3000); // Send 1KHz sound signal...
+    tone(Buzzer, 3000);
     delay(500);
     //Serial.println ("Heater Activated!.... Increasing temperature to Ideal");
     Serial.println("\n");
@@ -298,14 +298,14 @@ void loop()
      else if (t>25)
     {
     Serial.println("Temperature is above 25C !");
-    tone(Buzzer, 3000); // Send 1KHz sound signal...
+    tone(Buzzer, 3000); 
     delay(500);
     //Serial.println ("Air-Cooler Activated!.... decreasing temperature to Ideal");
     //Serial.println("\n");
     }
       else
     {
-    noTone(Buzzer);     // Stop sound...
+    noTone(Buzzer);     
     }
     
     delay(1000);
@@ -317,16 +317,16 @@ void loop()
     if(co2ppm>999.9)
   {
    Serial.println(" Level is above threshold!");
-   tone(Buzzer, 5000); // Send 1KHz sound signal...
+   tone(Buzzer, 5000); 
     delay(500);
-    //Serial.println("\n");
-    //Serial.println("\n");
+   // Serial.println("\n");
+  //  Serial.println("\n");
     //Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
   }
   else
   {
     Serial.println(" Level is within acceptable range");
-    noTone(Buzzer);     // Stop sound...
+    noTone(Buzzer);   
   }
 
   delay(1000);
@@ -337,17 +337,17 @@ void loop()
    if(MQGetGasPercentage(MQRead(anInput)/Ro,co)>9)
   {
    Serial.println(" Level is above threshold!");
-   tone(Buzzer, 5000); // Send 1KHz sound signal...
+   tone(Buzzer, 5000); 
    delay(500);
-   // Serial.println("\n");
-   // Serial.println("\n");
-   // Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
+  //  Serial.println("\n");
+  //  Serial.println("\n");
+  //  Serial.println("True HEPA filter Activated!.... Improving Air-Quality");
   }
   else
   {
    Serial.println(" Level is within acceptable range");
    Serial.print("\n");
-   noTone(Buzzer);     // Stop sound...
+   noTone(Buzzer);     
   }
   
   Serial.print("\n"); 
@@ -360,27 +360,46 @@ void loop()
     temp.toCharArray(val, 16); 
     Serial.println(val);
     DweetClient.add(key,val);
-    DweetClient.sendAll(THIG_NAME);
+    DweetClient.sendAll(THING_NAME);
     
    
    String humd = String(h,2); 
     humd.toCharArray(val, 16); 
     Serial.println(val);
     DweetClient.add(key1,val);
-    DweetClient.sendAll(THIG_NAME);
+    DweetClient.sendAll(THING_NAME);
     
 
     itoa(co2ppm, val, 10); 
     Serial.println(val);
     DweetClient.add(key2, val);
-    DweetClient.sendAll(THIG_NAME);
+    DweetClient.sendAll(THING_NAME);
    
 
     String c = String(MQGetGasPercentage(MQRead(anInput)/Ro,co),2); 
     c.toCharArray(val, 16); 
     Serial.println(val);
     DweetClient.add(key3,val);
-    DweetClient.sendAll(THIG_NAME);
+    DweetClient.sendAll(THING_NAME);
+
+    
+    int a = (uS / US_ROUNDTRIP_CM);
+    int hol = a<=200; 
+  
+    itoa(hol, val, 10); 
+    Serial.println(val);
+    DweetClient.add(key4, val);
+    DweetClient.sendAll(THING_NAME);
+
+
+    
+    boolean(Bal)= (h>70) || (h<40) || (t<18) || (t>25) || (co2ppm>999.9) || (MQGetGasPercentage(MQRead(anInput)/Ro,co)>9);
+   
+    itoa(Bal, val, 10); 
+    Serial.println(val);
+    DweetClient.add(key5, val);
+    DweetClient.sendAll(THING_NAME);
+    
     delay(3000);
 
 
