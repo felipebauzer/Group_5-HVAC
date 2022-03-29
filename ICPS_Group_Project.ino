@@ -35,8 +35,8 @@ int melody[]={
 //Setting up Internet
 #include "dweetESP8266.h"
 #define THING_NAME "SEAS40-group5-HVAC" 
-const char* ssid = "dfa4fe";
-const char* password = "271435942";
+const char* ssid = "R-WIFI_AD0D";
+const char* password = "254BD78F6BA653A8";
 dweet DweetClient;
 
 char *key = "Temperature"; // this is the name of the parameter sent to dweet.io
@@ -374,14 +374,12 @@ void loop()
     Serial.println(val);
     DweetClient.add(key2, val);
     DweetClient.sendAll(THING_NAME);
-   
 
-    String c = String(MQGetGasPercentage(MQRead(anInput)/Ro,co),2); 
-    c.toCharArray(val, 16); 
+    itoa((MQGetGasPercentage(MQRead(anInput)/Ro,co)), val, 10); 
     Serial.println(val);
-    DweetClient.add(key3,val);
+    DweetClient.add(key3, val);
     DweetClient.sendAll(THING_NAME);
-
+   
     
     int a = (uS / US_ROUNDTRIP_CM);
     int hol = a<=200; 
