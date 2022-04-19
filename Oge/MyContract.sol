@@ -38,11 +38,11 @@ contract Factory {
      emit NewProduct(ProductId,_name,_id);
    }
      mapping(uint => address) public productToOwner;
-   //mapping(address => uint) public productToOwner;
      mapping(address => uint) OwnerProductCount;
 
-    function Ownership () public {
-    productToOwner= msg.sender ;
+   //Issue with exercise 11
+   function Ownership (uint _ProductId) public {
+    productToOwner[msg.sender] = _ProductId ;
     OwnerProductCount += msg.sender; 
    }
    
