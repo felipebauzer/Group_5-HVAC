@@ -67,16 +67,17 @@ contract Factory {
    ////Exercise 13 done
    
    //Exercise 14
-    mapping (uint => uint) public age;
-    modifier olderThan (uint _age, uint _userId)
-    {
-      require( _userId >= _age );
-              _;
+   function validationUsers( uint _userId) private view olderThan(18,_userId) {
 
     }
-    function validationUsers( uint _userId) public view olderThan(18,_userId) {
+    mapping (uint => uint) private age;  
 
+    modifier olderThan (uint _age, uint _userId) {
+
+        require (age[_userId] >= _age, "UNDERAGE");
+
+        _;
     }
-
+    
 }
 
