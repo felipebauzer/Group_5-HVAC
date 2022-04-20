@@ -1,0 +1,77 @@
+//MEHMET ANIL GÜRLEK 
+
+//SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.5.0 <0.8.0;
+
+contract Factory {
+    
+    uint idDigits = 16;
+    uint idModulus = idDigits ** 10;
+    struct Product {
+        string name; 
+        uint id;
+    }
+    Product[] public products;
+   
+    
+    /*function _createProduct(string memory _name, uint _id) private {
+        products.push(Product(_name,_id));
+    }*/
+
+    function _generatedRandomId(string memory _str)
+    private view returns (uint)
+    {
+        uint rand=uint(keccak256(abi.encodePacked(_str)));
+        return rand %idModulus;
+    }
+    
+    function createRandomProduct(string memory _name) public
+    {
+    uint randId = _generatedRandomId(_name);
+    _createProduct(_name,randId);   
+    }
+    
+    event NewProduct(uint ArrayProductId, uint name, uint id);
+    
+    function _createProduct(string memory _name, uint _id) private 
+    {
+       products.push(Product(_name, _id));
+       uint ArrayProductId = (products.length -1);
+       emit NewProduct(ArrayProductId, _name, _id);
+        
+    }
+
+// -- Exercise 10 --
+mapping (address => uint) public productToOwner;
+mapping (uint => address) ownerProductCount;
+
+function Ownership (uint ArrayProductId) public {
+    productToOwner[ArrayProductId] = msg.sender ;
+    OwnerProductCount[msg.sender]++; 
+   }
+
+   function getProductsByOwner(address _owner) external view {
+    uint counter = 0;
+    uint[] memory result;
+    result = ownerProductCount;
+    for (uint i= 0; i < products.length; i++){
+        if (productToOwner = _owner) {
+            result[counter]=i;
+            counter++;
+        }
+    }
+    return result;
+
+    mapping (uint => uint) public age;
+    modifier olderThan (uint _age, uint _userId)
+    {
+      require( _userId >= _age );
+              _;
+
+    }
+    function validationUsers( uint _userId) public view olderThan(18,_userId) {
+
+    }
+}
+
+}
