@@ -40,10 +40,9 @@ contract Factory {
      mapping(uint => address) public productToOwner;
      mapping(address => uint) OwnerProductCount;
 
-   //Issue with exercise 11
-   function Ownership (uint _ProductId) public {
-    productToOwner[msg.sender] = _ProductId ;
-    OwnerProductCount += msg.sender; 
+    function Ownership (uint _Productid) public {
+    productToOwner[_Productid] = msg.sender ;
+    OwnerProductCount[msg.sender]++; 
    }
    
   function getProductsByOwner (address _owner) external view 
