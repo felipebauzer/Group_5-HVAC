@@ -28,20 +28,20 @@ contract Factory {
 
    }
 
-   event NewProduct(uint ProductId, string name, uint id );
+   event NewProduct(uint ArrayProductId, string name, uint id );
     function _createProduct(string memory _name, uint _id) 
    private {
      //uint ArrayProductid = products.push(Product(_name,_id))-1;
      //array.push(NewProduct(_ArrayProductid,_name)) ;
      products.push(Product(_name,_id));
-     uint ProductId = (products.length- 1);
-     emit NewProduct(ProductId,_name,_id);
+     uint ArrayProductId = (products.length- 1);
+     emit NewProduct(ArrayProductId,_name,_id);
    }
      mapping(uint => address) public productToOwner;
      mapping(address => uint) OwnerProductCount;
 
-    function Ownership (uint _Productid) public {
-    productToOwner[_Productid] = msg.sender ;
+    function Ownership (uint ArrayProductId) public {
+    productToOwner[ArrayProductId] = msg.sender ;
     OwnerProductCount[msg.sender]++; 
    }
    
