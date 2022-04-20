@@ -1,20 +1,23 @@
 //SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.5.0 <0.8.0;
-contract Factory {
-  uint idDigits = 16;
-  uint idModulus = 10 ** idDigits;
-
+pragma solidity >=0.5.0 <0.8.0; //Exercise 1
+contract Factory {  
+  uint idDigits = 16; //Exercise 2
+  uint idModulus = 10 ** idDigits; //Exercise 3
+//Exercise 4
   struct Product {
       string name;
       uint id;
 
   }
+  //Exercise 5
    Product[] public products;
+   //Exercise 6
    /*function _createProduct(string memory _name, uint _id) 
    private {
       products.push(Product(_name, _id));
    }*/
 
+//Exercise 7&8
    function _generateRandomId(string memory _str) private view
     returns (uint) {
         uint rand = uint (keccak256(abi.encodePacked(_str)));
@@ -27,7 +30,7 @@ contract Factory {
        _createProduct(_name, randID);
 
    }
-
+//Exercise 9
    event NewProduct(uint ArrayProductId, string name, uint id );
     function _createProduct(string memory _name, uint _id) 
    private {
@@ -37,14 +40,16 @@ contract Factory {
      uint ArrayProductId = (products.length- 1);
      emit NewProduct(ArrayProductId,_name,_id);
    }
+//Exercise 10
      mapping(uint => address) public productToOwner;
      mapping(address => uint) OwnerProductCount;
 
+//Exercise 11
     function Ownership (uint ArrayProductId) public {
     productToOwner[ArrayProductId] = msg.sender ;
     OwnerProductCount[msg.sender]++; 
    }
-   
+//Exercise 12
   function getProductsByOwner (address _owner) external view 
    returns(uint[] memory) {
      uint counter = 0;
@@ -59,7 +64,9 @@ contract Factory {
      return result;
 
    }
+   ////Exercise 13 done
    
+   //Exercise 14
     mapping (uint => uint) public age;
     modifier olderThan (uint _age, uint _userId)
     {
