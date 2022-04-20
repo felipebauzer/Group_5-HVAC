@@ -24,10 +24,12 @@ contract Factory {
        return (rand%idModulus);
           
    }
-   function _createRandomProduct(string memory _name) public
+   function _createRandomProduct(string memory _name, uint _age) public
    {
-      uint randID = _generateRandomId(_name);
-       _createProduct(_name, randID);
+      uint randId = _generateRandomId(_name);
+       _createProduct(_name, randId);
+       age[randId] = _age;
+       validationUsers(randId); 
 
    }
 //Exercise 9
