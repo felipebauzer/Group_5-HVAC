@@ -12,9 +12,9 @@ contract HVAC{
        return (rand%idModulus);
     }
 
-    function Value(string memory _Parameter, uint _degree) public {
+    function Temperature( uint _degree) public {
 
-        uint randId=_generateValueId(_Parameter);
+        uint randId;
 
         degree[randId] = _degree;
 
