@@ -1,17 +1,8 @@
 //SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.5.0 <0.8.0; 
 contract HVAC{
-    //GetTemperature
-
-  uint idDigits = 16; 
-  uint idModulus = 10 ** idDigits; 
+    
  
- function _generateValueId(string memory _str) private view
-    returns (uint) {
-        uint rand = uint (keccak256(abi.encodePacked(_str)));
-       return (rand%idModulus);
-    }
-
     function Temperature( uint _degree) public {
 
         uint randId;
