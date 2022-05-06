@@ -2,7 +2,7 @@
 pragma solidity >=0.5.0 <0.8.0; 
 contract HVAC{
     
- 
+ //Get Temperature
     function Temperature( uint _degree) public {
 
         uint randId;
